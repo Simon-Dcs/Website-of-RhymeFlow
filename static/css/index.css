@@ -949,16 +949,16 @@ a:focus {
   background: linear-gradient(180deg, #ffffff 0%, #f4fbfa 100%);
 }
 
-.rf-case-tabs {
+.rf-progress-dots {
   display: flex;
   justify-content: center;
-  gap: 0.55rem;
+  align-items: center;
+  gap: 0.62rem;
   flex-wrap: wrap;
-  margin: -0.4rem auto 1.5rem;
+  margin: 0.2rem auto 1.35rem;
   max-width: 980px;
 }
 
-.rf-case-tab,
 .rf-page-btn {
   border: 1px solid rgba(15, 118, 110, 0.18);
   background: white;
@@ -969,23 +969,30 @@ a:focus {
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 
-.rf-case-tab {
-  min-width: 42px;
-  height: 36px;
-  padding: 0 0.9rem;
-  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+.rf-progress-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.22);
+  cursor: pointer;
+  transition: width 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
-.rf-case-tab:hover,
 .rf-page-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 36px rgba(15, 118, 110, 0.14);
 }
 
-.rf-case-tab.is-active {
+.rf-progress-dot:hover {
+  transform: scale(1.18);
+  background: rgba(15, 118, 110, 0.5);
+}
+
+.rf-progress-dot.is-active {
+  width: 30px;
   background: var(--rf-teal);
-  color: white;
-  border-color: var(--rf-teal);
 }
 
 .rf-comparison-shell {
@@ -1008,18 +1015,10 @@ a:focus {
 }
 
 .rf-comparison-topbar h3 {
-  margin: 0.15rem 0 0;
+  margin: 0;
   color: var(--rf-ink);
   font-size: 1.35rem;
   font-weight: 900;
-}
-
-.rf-comparison-count {
-  color: var(--rf-teal);
-  font-size: 0.78rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .rf-page-btn {
@@ -1029,7 +1028,7 @@ a:focus {
 
 .rf-comparison-page {
   display: none;
-  padding: 1.25rem;
+  padding: 1.25rem 1.25rem 1rem;
 }
 
 .rf-comparison-page.is-active {

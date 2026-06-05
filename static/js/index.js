@@ -124,7 +124,6 @@ function setupVisualComparisonPager() {
     const tabs = Array.from(document.querySelectorAll('[data-comparison-target]'));
     const prevButton = document.querySelector('[data-comparison-prev]');
     const nextButton = document.querySelector('[data-comparison-next]');
-    const count = document.querySelector('[data-comparison-count]');
     const title = document.querySelector('[data-comparison-title]');
 
     if (pages.length === 0) return;
@@ -152,12 +151,8 @@ function setupVisualComparisonPager() {
             tab.classList.toggle('is-active', tabIndex === activeIndex);
         });
 
-        const caseId = pages[activeIndex].dataset.caseId || String(activeIndex + 1);
-        if (count) {
-            count.textContent = `Case ${caseId} / ${pages.length}`;
-        }
         if (title) {
-            title.textContent = `Case ${caseId}`;
+            title.textContent = `Video ${activeIndex + 1}`;
         }
     }
 
