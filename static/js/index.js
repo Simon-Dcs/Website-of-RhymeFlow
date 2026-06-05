@@ -119,6 +119,67 @@ function setupVideoCarouselAutoplay() {
     });
 }
 
+function setupVisualComparisonPager() {
+    const pages = Array.from(document.querySelectorAll('[data-comparison-page]'));
+    const tabs = Array.from(document.querySelectorAll('[data-comparison-target]'));
+    const prevButton = document.querySelector('[data-comparison-prev]');
+    const nextButton = document.querySelector('[data-comparison-next]');
+    const count = document.querySelector('[data-comparison-count]');
+    const title = document.querySelector('[data-comparison-title]');
+
+    if (pages.length === 0) return;
+
+    let activeIndex = Math.max(0, pages.findIndex(page => page.classList.contains('is-active')));
+
+    function pausePageVideos(page) {
+        page.querySelectorAll('video').forEach(video => {
+            video.pause();
+        });
+    }
+
+    function showPage(index) {
+        activeIndex = (index + pages.length) % pages.length;
+
+        pages.forEach((page, pageIndex) => {
+            const isActive = pageIndex === activeIndex;
+            page.classList.toggle('is-active', isActive);
+            if (!isActive) {
+                pausePageVideos(page);
+            }
+        });
+
+        tabs.forEach((tab, tabIndex) => {
+            tab.classList.toggle('is-active', tabIndex === activeIndex);
+        });
+
+        const caseId = pages[activeIndex].dataset.caseId || String(activeIndex + 1);
+        if (count) {
+            count.textContent = `Case ${caseId} / ${pages.length}`;
+        }
+        if (title) {
+            title.textContent = `Case ${caseId}`;
+        }
+    }
+
+    tabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => showPage(index));
+    });
+
+    if (prevButton) {
+        prevButton.addEventListener('click', () => showPage(activeIndex - 1));
+    }
+    if (nextButton) {
+        nextButton.addEventListener('click', () => showPage(activeIndex + 1));
+    }
+
+    showPage(activeIndex);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    setupVisualComparisonPager();
+});
+
+if (window.jQuery) {
 $(document).ready(function() {
     // Check for click events on the navbar burger icon
 
@@ -132,11 +193,16 @@ $(document).ready(function() {
     }
 
 	// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
+    if (window.bulmaCarousel) {
+        var carousels = bulmaCarousel.attach('.carousel', options);
+    }
 	
-    bulmaSlider.attach();
+    if (window.bulmaSlider) {
+        bulmaSlider.attach();
+    }
     
     // Setup video autoplay for carousel
     setupVideoCarouselAutoplay();
 
 })
+}
